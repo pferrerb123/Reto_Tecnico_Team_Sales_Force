@@ -1,0 +1,50 @@
+ -- Creación de la tabla EVAL_REQ_DETALLE
+CREATE TABLE percy.EVAL_REQ_DETALLE (
+    N_ID_REQ_DETALLE    NUMBER        PRIMARY KEY, -- Sin especificar longitud
+    N_ID_RQ             NUMBER(10)    NOT NULL,
+    C_COD_AUTORIZATION  VARCHAR2(50)  NOT NULL,
+    D_FEC_TRX           DATE          NOT NULL,
+    N_MTO               NUMBER(10,2)  NOT NULL,
+    C_USU_REGISTRO      VARCHAR2(50)  NOT NULL,
+    D_FEC_REGISTRO      DATE          NOT NULL
+);
+
+-- Creación de una secuencia para la clave primaria
+CREATE SEQUENCE SEQ_EVAL_REQ_DETALLE
+START WITH 1
+INCREMENT BY 1
+CACHE 20; -- Cache para optimizar rendimiento
+
+-- Creación de un trigger para autogenerar el valor de N_ID_REQ_DETALLE
+CREATE OR REPLACE TRIGGER TRG_BEFORE_INSERT_REQ_DETALLE
+BEFORE INSERT ON percy.EVAL_REQ_DETALLE
+FOR EACH ROW
+BEGIN
+  :NEW.N_ID_REQ_DETALLE := SEQ_EVAL_REQ_DETALLE.NEXTVAL;
+END;
+
+
+-- (Opcional) Crear una clave foránea si N_ID_RQ hace referencia a otra tabla
+-- ALTER TABLE EVAL_REQ_DETALLE
+-- ADD CONSTRAINT FK_ID_RQ FOREIGN KEY (N_ID_RQ) REFERENCES OTRA_TABLA(N_ID_RQ);
+
+-- Ejemplo de inserción de un registro en la tabla
+INSERT INTO percy.EVAL_REQ_DETALLE (
+    N_ID_RQ,
+    C_COD_AUTORIZATION,
+    D_FEC_TRX,
+    N_MTO,
+    C_USU_REGISTRO,
+    D_FEC_REGISTRO
+)
+VALUES (
+     2793862,
+    '080342',
+    SYSDATE,
+    14.900,
+    'SISTEMA',
+    SYSDATE
+);
+
+-- Confirmar la inserción
+COMMIT;

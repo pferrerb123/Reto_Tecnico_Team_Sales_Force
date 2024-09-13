@@ -1,0 +1,51 @@
+{
+	"info": {
+		"_postman_id": "c263eb7b-94b2-49a2-b70f-80ce793544ae",
+		"name": "RetoTecnico_SalesForces",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2699775",
+		"_collection_link": "https://gold-satellite-921055.postman.co/workspace/Pacifico-Seguros~cb0b75e1-0259-432d-9469-f051a26bc4a3/collection/2699775-c263eb7b-94b2-49a2-b70f-80ce793544ae?action=share&source=collection_link&creator=2699775"
+	},
+	"item": [
+		{
+			"name": "Obtener todos los estudiantes",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un estudiante por ID",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un Estudiante",
+			"request": {
+				"method": "POST",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar un estudiante",
+			"request": {
+				"method": "PUT",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un estudiante",
+			"request": {
+				"method": "DELETE",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

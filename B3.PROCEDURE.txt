@@ -1,0 +1,48 @@
+-- Crear el package specification
+CREATE OR REPLACE PACKAGE percy.PKG_EVAL_ASIGNACION IS
+  PROCEDURE Asignar_Tipo_Gestion;
+END PKG_EVAL_ASIGNACION;
+
+
+-- Crear el package body
+CREATE OR REPLACE PACKAGE BODY percy.PKG_EVAL_ASIGNACION IS
+
+  PROCEDURE Asignar_Tipo_Gestion IS
+    -- Declarar el cursor para recorrer los registros de EVAL_REQ_DETALLE
+    CURSOR cur_eval IS
+      SELECT n_id, n_mto
+      FROM EVAL_REQ_DETALLE
+      WHERE n_id_tipo_gestion IS NULL; -- Para asegurarnos de que no se han asignado aún
+
+    -- Declarar variables para almacenar los datos del cursor
+    v_n_id EVAL_REQ_DETALLE.n_id%TYPE;
+    v_n_mto EVAL_REQ_DETALLE.n_mto%TYPE;
+    v_n_id_tipo_gestion EVAL_REQ_DETALLE.n_id_tipo_gestion%TYPE;
+
+  BEGIN
+    -- Abrir el cursor y recorrer los registros
+    FOR rec_eval IN cur_eval LOOP
+      -- Asignar el tipo de gestión basado en el valor de n_mto
+      IF rec_eval.n_mto <= 10 THEN
+        v_n_id_tipo_gestion := 6;
+      ELSIF rec_eval.n_mto > 10 AND rec_eval.n_mto <= 35 THEN
+        v_n_id_tipo_gestion := 5;
+      ELSIF rec_eval.n_mto > 35 AND rec_eval.n_mto <= 100 THEN
+        v_n_id_tipo_gestion := 4;
+      ELSE
+        v_n_id_tipo_gestion := 3;
+      END IF;
+
+      -- Actualizar el registro en la tabla EVAL_REQ_DETALLE
+      UPDATE percy.EVAL_REQ_DETALLE
+      SET n_id_tipo_gestion = v_n_id_tipo_gestion,
+          d_fec_gestion = SYSDATE
+      WHERE n_id = rec_eval.n_id;
+
+    END LOOP;
+
+    -- Confirmar la transacción
+    COMMIT;
+  END Asignar_Tipo_Gestion;
+
+END PKG_EVAL_ASIGNACION;

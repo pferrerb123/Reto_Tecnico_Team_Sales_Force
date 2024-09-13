@@ -1,0 +1,47 @@
+-- Creación de la tabla EVAL_TIP_GESTION
+CREATE TABLE percy.EVAL_TIP_GESTION (
+    N_ID_TIPO_GESTION   NUMBER(10) PRIMARY KEY,
+    C_DESCRIPTION       VARCHAR2(255),
+    N_PESO              NUMBER,
+    N_ESTADO            NUMBER,
+    C_USU_REGISTRO      VARCHAR2(100),
+    D_FEC_REGISTRO      DATE DEFAULT SYSDATE
+);
+
+-- Procedimiento para insertar datos en EVAL_TIP_GESTION
+CREATE OR REPLACE PROCEDURE percy.INSERT_EVAL_TIP_GESTION (
+    p_N_ID_TIPO_GESTION  IN NUMBER,
+    p_C_DESCRIPTION      IN VARCHAR2,
+    p_N_PESO             IN NUMBER,
+    p_N_ESTADO           IN NUMBER,
+    p_C_USU_REGISTRO     IN VARCHAR2
+) IS
+BEGIN
+    INSERT INTO EVAL_TIP_GESTION (
+        N_ID_TIPO_GESTION,
+        C_DESCRIPTION,
+        N_PESO,
+        N_ESTADO,
+        C_USU_REGISTRO,
+        D_FEC_REGISTRO
+    )
+    VALUES (
+        p_N_ID_TIPO_GESTION,
+        p_C_DESCRIPTION,
+        p_N_PESO,
+        p_N_ESTADO,
+        p_C_USU_REGISTRO,
+        SYSDATE
+    );
+
+    COMMIT;
+END INSERT_EVAL_TIP_GESTION;
+
+-- inserción de datos
+BEGIN
+   percy.INSERT_EVAL_TIP_GESTION(3, 'Gestión Visa', 60, 1, 'GNOAIN');
+   percy.INSERT_EVAL_TIP_GESTION(4, 'Gestión MC', 50, 1, 'GNOAIN');
+   percy.INSERT_EVAL_TIP_GESTION(5, 'Contracargo Visa', 0, 1, 'GNOAIN');
+   percy.INSERT_EVAL_TIP_GESTION(6, 'Contracargo MC', 0, 1, 'GNOAIN');
+END;
+
